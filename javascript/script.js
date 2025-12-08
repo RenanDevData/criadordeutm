@@ -14,13 +14,15 @@ function gerarUTM() {
     document.getElementById('baseUrl6').value.trim()
   ].filter(url => url !== "");
 
-  const campaignId = document.getElementById('utm_id').value.trim();
-  const source = document.getElementById('utmSource').value.trim();
-  const medium = document.getElementById('utmMedium').value.trim();
-  const campaign = document.getElementById('utmCampaign').value.trim();
-  const term = document.getElementById('utmTerm').value.trim();
-  const content = document.getElementById('utmContent').value.trim();
+  const campaignId = document.getElementById('utm_id').value.trim().toLowerCase();
+  const source = document.getElementById('utmSource').value.trim().toLowerCase();
+  const medium = document.getElementById('utmMedium').value.trim().toLowerCase();
+  const campaign = document.getElementById('utmCampaign').value.trim().toLowerCase();
+  const term = document.getElementById('utmTerm').value.trim().toLowerCase();
+  const content = document.getElementById('utmContent').value.trim().toLowerCase();
   const pmkt = document.getElementById('pmkt').value;
+
+  console.log(campaignId,source,medium,campaign, term,content)
 
   if (baseUrls.length === 0 || !source || !medium) {
     Swal.fire({
@@ -217,7 +219,10 @@ function exibirHistorico() {
   const historico = JSON.parse(localStorage.getItem('historicoUTM')) || [];
 
   historicoContainer.innerHTML = `
-    <h2>Links criados</h2> <div><i class="fa-solid fa-file-excel excel_download exportar"></i></div>
+    <h2>Links criados</h2> 
+    <div class="exportar">
+    <i class="fa-solid fa-file-excel excel_download exportar"></i> 
+    </div>
     <button id="limparHistorico">Limpar histórico</button>
   `;
 
@@ -246,6 +251,7 @@ function ativarBotaoLimpar() {
         text: "Isso vai apagar todos os links salvos.",
         icon: 'warning',
         showCancelButton: true,
+        confirmButtonColor: '#e20c0cff',
         confirmButtonText: 'Sim, apagar',
         cancelButtonText: 'Cancelar',
         showClass: {
@@ -347,6 +353,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // })
 
 // })
+
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // ... seu código existente para gerarUtmButton e exibirHistorico ...
