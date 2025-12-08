@@ -123,7 +123,13 @@ function gerarUTM() {
     title: "Link(s) gerado com sucesso!",
     icon: 'success',
     timer: 1200,
-    showConfirmButton: false
+    showConfirmButton: false,
+    showClass: {
+    popup: 'animate__animated animate__fadeInUp animate__faster'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutDown animate__faster'
+  }
   });
 
   const outputDiv = document.getElementById('urlResultado');
@@ -159,13 +165,25 @@ function copiarTexto(texto) {
         title: 'Copiado!',
         icon: 'success',
         timer: 1300,
-        showConfirmButton: false
+        showConfirmButton: false,
+        showClass: {
+    popup: 'animate__animated animate__fadeInUp animate__faster'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutDown animate__faster'
+  }
       });
     })
     .catch(() => {
       Swal.fire({
         title: 'Erro ao copiar',
-        icon: 'error'
+        icon: 'error',
+        showClass: {
+    popup: 'animate__animated animate__fadeInUp animate__faster'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutDown animate__faster'
+  }
       });
     });
 }
@@ -188,7 +206,11 @@ function exibirHistorico() {
 
   historicoContainer.innerHTML = `
     <h2>Links criados</h2>
-    <i class="fa-solid fa-file-excel excel_download"></i>
+    <i class="fa-solid fa-file-excel excel_download"> 
+    
+    
+    
+    </i>
     <button id="limparHistorico">Limpar histórico</button>
   `;
 
@@ -201,7 +223,7 @@ function exibirHistorico() {
     <div class="link-item">
       <span class="link-copy" data-link="${item.link}">${item.link}</span>
       <span class="copy-icon" data-link="${item.link}">📋</span>
-      <a href="${item.link}" target="_blank">🔗</a>
+      <a href="${item.link}" target="_blank" style="text-decoration:none">🔗</a>
     </div>
   `).join('');
 
@@ -211,7 +233,14 @@ function exibirHistorico() {
       text: "Isso vai apagar tudo.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Sim"
+      confirmButtonText: "Sim",
+      confirmButtonColor: "#f80d0dff",
+      showClass: {
+    popup: 'animate__animated animate__fadeInUp animate__faster'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutDown animate__faster'
+  }
     }).then(res => {
       if (res.isConfirmed) {
         localStorage.removeItem('historicoUTM');
@@ -262,7 +291,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const data = new Date().toISOString().slice(0, 10).replace(/-/g, '');
       exportarParaCSV(historico, `utm_${data}`);
-      Swal.fire({ title: 'CSV baixado!', icon: 'success', timer: 1200, showConfirmButton: false });
+      Swal.fire({
+         title: 'CSV baixado!', 
+         icon: 'success', 
+         timer: 1200, 
+         showConfirmButton: false,
+        showClass: {
+    popup: 'animate__animated animate__fadeInUp animate__faster'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutDown animate__faster'
+  }
+        
+        });
     }
   });
 

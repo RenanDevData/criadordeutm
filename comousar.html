@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Como usar o Gerador de UTM</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background:#0f1115;
+      color:#e8e8e8;
+      padding:30px;
+      line-height:1.6;
+      max-width:900px;
+      margin:auto;
+    }
+    h1, h2 { color:#4da6ff; }
+    .card {
+      background:#1a1d23;
+      padding:20px;
+      border-radius:10px;
+      margin-bottom:25px;
+      border:1px solid #2a2f36;
+    }
+    code {
+      background:#2a2f36;
+      padding:3px 6px;
+      border-radius:4px;
+      font-size:14px;
+      color:#a3e3ff;
+    }
+    ul li { margin-bottom:6px; }
+    .utm-exemplo span {
+      font-weight:bold;
+      padding:2px 4px;
+      border-radius:4px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Como usar o Gerador de UTM</h1>
+<p>Este guia explica <strong>o que é cada parâmetro UTM</strong> e <strong>como preencher corretamente na ferramenta</strong>.</p>
+
+<h2>1. O que são UTMs?</h2>
+<div class="card">
+  <p>UTMs são códigos adicionados no final de uma URL para identificar:</p>
+  <ul>
+    <li>De onde veio o tráfego</li>
+    <li>Qual campanha trouxe o clique</li>
+    <li>Qual anúncio ou variação performou melhor</li>
+  </ul>
+</div>
+
+<h2>2. Explicação de cada parâmetro</h2>
+<div class="card">
+  <h3>utm_source — De onde vem o usuário</h3>
+  <p>É a plataforma que originou o tráfego.</p>
+  <p><strong>Exemplos:</strong> <code>google</code>, <code>instagram</code>, <code>tiktok</code>, <code>facebook</code></p>
+
+  <h3>utm_medium — Tipo de tráfego</h3>
+  <p>Identifica a "categoria" do tráfego.</p>
+  <p><strong>Exemplos:</strong> <code>cpc</code>, <code>paid_social</code>, <code>email</code>, <code>organic</code></p>
+
+  <h3>utm_campaign — Nome da campanha</h3>
+  <p>O nome da ação ou campanha de marketing.</p>
+  <p><strong>Exemplos:</strong> <code>black_friday_2025</code>, <code>lançamento_curso_excel</code></p>
+
+  <h3>utm_term — Palavra-chave (opcional)</h3>
+  <p>Usado principalmente em Google Ads.</p>
+  <p><strong>Exemplo:</strong> <code>curso_excel_online</code></p>
+
+  <h3>utm_content — Variação do anúncio (opcional)</h3>
+  <p>Perfeito para identificar cada peça criativa.</p>
+  <p><strong>Exemplos:</strong> <code>criativo_1</code>, <code>video_long</code>, <code>imagem_azul</code></p>
+
+  <h3>utm_id — ID da campanha</h3>
+  <p>Recomendado para rastreamento avançado.</p>
+  <p><strong>Exemplo:</strong> <code>campanha_22</code></p>
+
+  <h3>pmkt — Parâmetro extra (se aplicável)</h3>
+  <p>Campo para uso livre caso queira adicionar algum identificador próprio.</p>
+</div>
+
+<h2>3. Como usar a ferramenta</h2>
+<div class="card">
+  <ol>
+    <li>Digite sua URL base (ex.: <code>https://meusite.com/produto</code>).</li>
+    <li>Preencha ao menos <strong>utm_source</strong> e <strong>utm_medium</strong>.</li>
+    <li>Preencha os demais campos conforme sua campanha.</li>
+    <li>Clique em <strong>Gerar UTM</strong>.</li>
+    <li>O sistema normaliza tudo (minúsculo, sem acento, com <code>_</code>).</li>
+    <li>Copie o link final e use na campanha.</li>
+  </ol>
+</div>
+
+<h2>4. Exemplo de URL gerada</h2>
+<div class="card utm-exemplo">
+  <p>
+    <span style="color:#4da6ff;">https://meusite.com/produto</span>?
+    <span style="color:#ff3b30;">utm_source=google</span>&
+    <span style="color:#ff9500;">utm_medium=cpc</span>&
+    <span style="color:#34c759;">utm_campaign=black_friday</span>&
+    <span style="color:#af52de;">utm_term=curso_excel</span>&
+    <span style="color:#5ac8fa;">utm_content=criativo_1</span>
+  </p>
+</div>
+
+<h2>5. Boas práticas rápidas</h2>
+<div class="card">
+  <ul>
+    <li>Use sempre minúsculas.</li>
+    <li>Evite espaços — use <code>_</code>.</li>
+    <li>Seja claro e consistente.</li>
+    <li>Evite nomes longos demais.</li>
+    <li>Não use acentos.</li>
+  </ul>
+</div>
+
+</body>
+</html>
