@@ -35,7 +35,9 @@ function normalizarUtm(valor) {
 // ===============================
 function colorirUtmPreview(url) {
   try {
-    const obj = new URL(url);
+    // Primeiro, garantimos que a URL base está com %20
+    const urlFormatada = url.replace(/\+/g, '%20');
+    const obj = new URL(urlFormatada);
 
     let base = `<span style="color:#0a84ff; font-weight:bold;">${obj.origin}${obj.pathname}</span>`;
     let params = [];
@@ -51,9 +53,12 @@ function colorirUtmPreview(url) {
     };
 
     obj.searchParams.forEach((valor, chave) => {
-      const cor = cores[chave] || "#ffffff";
+      const cor = cores[chave] || "#000";
+      // Aplicamos o encodeURIComponent ou replace no valor para exibir %20 no preview
+      const valorFormatado = encodeURIComponent(valor).replace(/%20/g, '%20'); 
+      
       params.push(
-        `<span style="color:${cor}; font-weight:bold;">${chave}=${valor}</span>`
+        `<span style="color:${cor}; font-weight:bold;">${chave}=${valorFormatado}</span>`
       );
     });
 
@@ -63,22 +68,65 @@ function colorirUtmPreview(url) {
   }
 }
 
-// ===============================
-// FUNÇÃO PURA PARA GERAR URL COM UTM
-// ===============================
+// // ===============================
+// // FUNÇÃO PURA PARA GERAR URL COM UTM
+// // ===============================
+// function criarUrlComUtm(baseUrl, campos) {
+//   console.log(baseUrl)
+//   if (!/^https?:\/\//i.test(baseUrl)) {
+//     console.log(baseUrl)
+//     baseUrl = "https://" + baseUrl;
+//   }
+
+//   // Se a URL de origem já vier com +, tratamos como espaço para não duplicar erro
+//   const urlLimpa = baseUrl.replace(/\+/g, ' ');
+//   console.log(urlLimpa)
+//   const url = new URL(urlLimpa);
+//   console.log(url )
+//   Object.entries(campos).forEach(([key, value]) => {
+//     if (value) url.searchParams.set(key, value);
+//   });
+
+//   // Retorna a string trocando o padrão + por %20
+
+//   return url.toString().replace(/\+/g, '%20');
+// }
+
+
+
 function criarUrlComUtm(baseUrl, campos) {
+  // 1. Garante o protocolo HTTPS
   if (!/^https?:\/\//i.test(baseUrl)) {
     baseUrl = "https://" + baseUrl;
   }
 
-  const url = new URL(baseUrl);
+  // 2. Cria a string de UTMs (apenas os campos preenchidos)
+  const utmsGeradas = Object.entries(campos)
+    .filter(([_, value]) => value) // Remove vazios
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
 
-  Object.entries(campos).forEach(([key, value]) => {
-    if (value) url.searchParams.set(key, value);
-  });
+  if (!utmsGeradas) return baseUrl;
 
-  return url.toString();
+  // 3. Verifica se a URL já tem uma Query String (interrogação)
+  // Se já tiver '?', adicionamos as UTMs com '&' no final
+  const temInterrogacao = baseUrl.includes('?');
+  let urlFinal = temInterrogacao 
+    ? `${baseUrl}&${utmsGeradas}` 
+    : `${baseUrl}?${utmsGeradas}`;
+
+  // 4. TRATAMENTO FINAL (O segredo para a CVC)
+  // - Mantemos o que já era %20
+  // - Transformamos espaços reais em %20
+  // - Transformamos sinais de + (que venham da origem) em %20
+  // - NÃO deixamos o navegador codificar vírgulas e pontos-e-vírgulas
+  return urlFinal
+    .replace(/\s/g, '%20')    // Espaço vira %20
+    .replace(/\+/g, '%20')    // + vira %20
+    .replace(/%2B/g, '%20');  // Caso algum + já estivesse codificado
 }
+
+
 
 // ===============================
 // GERAR UTM
